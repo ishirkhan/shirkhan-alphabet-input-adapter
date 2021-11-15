@@ -15,15 +15,18 @@
   },
   "scripts": {
     "dev": "vite",
+    "start": "vite",
     "build": "tsc && vite build",
     "postbuild": "tsc",
     "serve": "vite preview"
   },
   "devDependencies": {
+    "@types/keyboardjs": "^2.5.0",
     "typescript": "^4.3.2",
     "vite": "^2.6.4"
   },
   "dependencies": {
+    "keyboardjs": "^2.6.4",
     "shirkhan-alphabet": "^0.0.5"
   }
 }

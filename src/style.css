@@ -1,3 +1,9 @@
+@font-face {
+  font-family: "UKIJ Ekran";
+  font-weight: normal;
+  src: url('https://crx.learnfans.com/fonts/UKIJTuzKitab_Regular/UKIJTuzKitab_Regular.woff2') format("woff");
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -5,4 +11,16 @@
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  font-size: 24px;
+}
+
+body {
+  font-family: "UKIJ Ekran";
+  font-size: 24px;
+}
+
+input,
+textarea {
+  font-family: "UKIJ Ekran";
+  font-size: 24px;
 }

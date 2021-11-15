@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@types/keyboardjs@^2.5.0":
+  version "2.5.0"
+  resolved "https://registry.nlark.com/@types/keyboardjs/download/@types/keyboardjs-2.5.0.tgz#8ab3ac77a1e413e64b80c51b8d6c20e6c79da3f5"
+  integrity sha1-irOsd6HkE+ZLgMUbjWwg5sedo/U=
+
 esbuild-android-arm64@0.13.13:
   version "0.13.13"
   resolved "https://registry.npmmirror.com/esbuild-android-arm64/download/esbuild-android-arm64-0.13.13.tgz#da07b5fb2daf7d83dcd725f7cf58a6758e6e702a"
@@ -133,6 +138,11 @@ is-core-module@^2.2.0:
   integrity sha1-AyEzbD0JJeSX/Zf12VyxFKXM1Ug=
   dependencies:
     has "^1.0.3"
+
+keyboardjs@^2.6.4:
+  version "2.6.4"
+  resolved "https://registry.npm.taobao.org/keyboardjs/download/keyboardjs-2.6.4.tgz#28dccd9787c8f37e7c017df2f87294ca21143436"
+  integrity sha1-KNzNl4fI8358AX3y+HKUyiEUNDY=
 
 nanoid@^3.1.30:
   version "3.1.30"

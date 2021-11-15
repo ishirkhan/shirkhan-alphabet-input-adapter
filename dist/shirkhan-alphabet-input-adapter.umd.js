@@ -1,0 +1,1 @@
+(function(e,n){typeof exports=="object"&&typeof module!="undefined"?module.exports=n():typeof define=="function"&&define.amd?define(n):(e=typeof globalThis!="undefined"?globalThis:e||self,e["shirkhan-alphabet-input-adapter"]=n())})(this,function(){"use strict";var e="";return()=>{}});

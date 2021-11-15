@@ -1,13 +1,29 @@
 {
   "name": "shirkhan-alphabet-input-adapter",
-  "version": "0.0.0",
+  "version": "0.0.1",
+  "files": [
+    "dist",
+    "docs"
+  ],
+  "typings": "dist/index.d.ts",
+  "main": "./dist/shirkhan-alphabet-input-adapter.umd.js",
+  "exports": {
+    ".": {
+      "import": "./dist/shirkhan-alphabet-input-adapter.es.js",
+      "require": "./dist/shirkhan-alphabet-input-adapter.umd.js"
+    }
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "postbuild": "tsc",
     "serve": "vite preview"
   },
   "devDependencies": {
     "typescript": "^4.3.2",
     "vite": "^2.6.4"
+  },
+  "dependencies": {
+    "shirkhan-alphabet": "^0.0.5"
   }
 }

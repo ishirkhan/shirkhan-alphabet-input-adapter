@@ -1,4 +1,4 @@
-import { Alphabet } from "shirkhan-alphabet";
+import { Alphabet, HEMZE } from "shirkhan-alphabet";
 import keyboardJS from "keyboardjs";
 
 export interface IAdapterConfig {
@@ -28,8 +28,8 @@ class Adapter {
       (document.getElementById("input-adapter-container") as HTMLInputElement);
     this.container.dir = "rtl";
   }
-  isCombineChar(current: string, pre: string) {
-    return this._alphaMap[current + pre] ? true : false;
+  isCombineChar(first: string, second: string) {
+    return this._alphaMap[first + second] ? true : false;
   }
 
   getLastCharPosition(n = 1) {
@@ -46,50 +46,56 @@ class Adapter {
     return { start, end };
   }
 
-  _replaceLast() {
-    // replace the last char t uchar and update select pos
-    const { start, end } = this.getLastCharPosition();
-    const lastChar = this.container.value.slice(start, end);
-    this.container.setRangeText(
-      this._alphaMap[lastChar] || lastChar,
-      start,
-      end
-    );
-    this.container.selectionStart = this.container.selectionEnd = end;
-  }
-  update() {
-    this._replaceLast();
-
-    // 处理组合字符
-    const { start, end } = this.getLastCharPosition(2);
-    const twoChar = this.container.value
-      .slice(start, end)
-      .split("")
-      .map((item) => this._alphaMap[item] || item);
-
-    console.log("twoChar", twoChar);
-    const first = twoChar[0];
-    const second = twoChar[1];
-    if (!first || !second) return;
-
-    if (!this.isCombineChar(first, second)) return;
-    this.container.setRangeText(this._alphaMap[first + second], start, end);
-
-    this.container.selectionStart = this.container.selectionEnd;
+  //to-do: 这里的逻辑代码需要提取更具体的功能方法中
+  update(currentChar: string) {
+    const { start, end } = this.getLastCharPosition(1);
+    let lastChar = this.container.value.slice(start, end);
+    // 首字符,原因需要补充 Hemze
+    if (lastChar.trim().length === 0) {
+      currentChar = this._alphaMap[currentChar] || ""; // 未知字符先废弃
+      if (this.alphabet.isVolwes(currentChar)) {
+        currentChar = HEMZE + currentChar;
+      }
+      this.container.setRangeText(currentChar);
+      this.container.selectionStart = this.container.selectionEnd =
+        end + currentChar.length;
+      // 非首字符
+    } else {
+      lastChar = this._alphaMap[lastChar] || lastChar;
+      // 组合键
+      if (this.isCombineChar(lastChar, currentChar)) {
+        this.container.setRangeText(
+          this._alphaMap[lastChar + currentChar],
+          end - 1,
+          end
+        );
+        this.container.selectionStart = this.container.selectionEnd = end + 1;
+        // 非组合键
+      } else {
+        this.container.setRangeText(this._alphaMap[currentChar] || ""); // 未知字符先废弃
+        this.container.selectionStart = this.container.selectionEnd = end + 1;
+      }
+    }
   }
   private _bindKey() {
-    keyboardJS.bind(
-      "",
-      () => {},
-      (e) => {
-        if (e?.pressedKeys.length! > 1) {
-          return;
-        }
-        const currentChar = e?.key!;
-        if (!/^[a-zA-Z]$/.test(currentChar)) return; // 限制只认26个ascii字符
-        this.update();
-      }
+    const keys = [...Array(26).keys()].map((i) =>
+      String.fromCharCode(i + 65).toLowerCase()
     );
+    keyboardJS.bind(keys, (e) => {
+      const currentChar = e?.key!;
+      if (
+        e?.pressedKeys.filter((item) => {
+          if (/^[a-zA-Z]$/.test(item)) return false; //a-z
+          if (["space", "spacebar"].includes(item)) return false; // space
+          return true;
+        }).length! > 0
+      ) {
+        // 限制只认26个ascii字符
+        return;
+      }
+      e?.preventDefault();
+      this.update(currentChar);
+    });
   }
   watchKey() {
     this._bindKey();

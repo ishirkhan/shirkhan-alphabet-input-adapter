@@ -1,6 +1,6 @@
 {
   "name": "shirkhan-alphabet-input-adapter",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "files": [
     "dist",
     "docs"
@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "keyboardjs": "^2.6.4",
-    "shirkhan-alphabet": "^0.0.5"
+    "shirkhan-alphabet": "^0.0.x",
+    "shirkhan-alphabet-table": "^0.0.x"
   }
 }
